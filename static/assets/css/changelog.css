@@ -1,0 +1,48 @@
+.changelog {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 100px auto 20px; /* Increased top margin to account for fixed nav */
+    max-width: 800px;
+    font-family: "Montserrat", sans-serif;
+    color: white;
+}
+
+.changelog h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.changelog-entry {
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.changelog-entry:last-child {
+    border-bottom: none;
+}
+
+.changelog-date {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.changelog-list {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.changelog-list li {
+    margin-bottom: 5px;
+}
+
+.changelog-list li::before {
+    content: "•";
+    color: #4CAF50;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
