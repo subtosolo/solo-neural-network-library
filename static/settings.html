@@ -43,12 +43,12 @@
       <br>
       <br>
       <br>
-      <h1 class="large">Change Tab Name</h1>
+      <h1 class="large">Tab Name</h1>
       <br>
       <a href="#" onclick="changeTabName()" style="text-decoration: none;color:white;">
-        <input class="search-bar" style="width:250px;height:50px;margin:10px; color: white;" type="text" id="name"
+        <input class="search-bar" style="width:300px;height:50px;margin:10px; color: white;" type="text" id="name"
           placeholder="Enter A New Name">
-        <button class="sbtn" onclick="changeTabName()">Change</button>
+        <button class="sbtn" style="width:100px;height:45px;" onclick="changeTabName()">Change</button>
       </a>
     </div>
     <div class="setting">
@@ -59,7 +59,7 @@
       <h1 class="large">Background</h1>
       <div class="search-results" style="display: block;justify-content: center; flex-wrap: wrap; gap:10px;">
         <br>
-        <input class="search-bar" style="width:350px;height:50px;margin:10px;" id="imageUrl" type="text"
+        <input class="search-bar" style="width:300px;height:50px;margin:10px;" id="imageUrl" type="text"
           placeholder="Enter background image URL">
         <button class="sbtn" onclick="setImageBackground()" style="width:70px;height:45px;">Apply</button>
         <button class="sbtn" onclick="localStorage.removeItem('backgroundImage');window.location.reload();"
@@ -106,7 +106,6 @@
       <button class="sbtn" onclick="setPanicKey()">Set Panic Key</button>
     </div>
     <div class="setting">
-      <br>
       <br>
       <br>
       <br>
