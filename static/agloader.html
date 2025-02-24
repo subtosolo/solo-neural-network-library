@@ -211,4 +211,17 @@ window.addEventListener('keydown', (event) => {
         document.querySelector("#siteurl").src = encodedAg;
     };
 </script>
+<script>
+  const uv = new Ultraviolet({
+    prefix: __uv$config.prefix,
+    bare: __uv$config.bare,
+    encodeUrl: __uv$config.encodeUrl,
+    decodeUrl: __uv$config.decodeUrl
+  });
+
+  document.getElementById('siteurl').addEventListener('load', function() {
+    const decodedUrl = __uv$config.decodeUrl(this.contentWindow.location.pathname.slice(__uv$config.prefix.length));
+    document.getElementById('search').value = decodedUrl;
+  });
+</script>
 </body>
