@@ -117,7 +117,7 @@ nav {
 .nav-links {
   display: flex;
   justify-content: space-around;
-  width: 30%;
+  width: 35%;
 }
 
 .nav-links li {
