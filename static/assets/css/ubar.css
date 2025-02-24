@@ -8,7 +8,7 @@
 }
 
 #urlBar {
-    display: flex;
+    display: block;
     align-items: center;
     background-color: rgb(6, 22, 35);
     padding: 8px;
