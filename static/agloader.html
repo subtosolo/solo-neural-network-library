@@ -157,13 +157,6 @@ var showImage = function (event) {
 };
 </script>
 <script>
-const visited = localStorage.getItem('visited');
-if (!visited) {
-  alert('HELLO! Welcome to Snorlax\'s Cave V2');
-  localStorage.setItem('visited', true);
-}
-</script>
-<script>
 window.addEventListener('keydown', (event) => {
   const keysPressed = (event.key === '~');
   if (keysPressed) {
