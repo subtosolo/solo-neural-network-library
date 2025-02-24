@@ -1,85 +1,48 @@
 const urlBar = document.querySelector("#urlBar")
 const siteUrl = document.querySelector("#siteurl");
-const urlInput = document.querySelector("#urlInput");
-let encodedUrl = localStorage.getItem("agUrl");
-var selectedTheme = localStorage.getItem('selectedOption');
-var bgUrl = localStorage.getItem('bgUrl');
+const searchInput = document.querySelector("#search");
 
-Object.defineProperty(siteUrl, 'src', {
-    set: function(value) {
-        this.setAttribute('src', value);
-        this.dispatchEvent(new Event('srcchange'));
+// Handle URL bar searches
+document.querySelector("#search").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        let url = searchInput.value.trim();
+        if (!isUrl(url)) {
+            url = "https://www.google.com/search?q=" + url;
+        } else if (!(url.startsWith("https://") || url.startsWith("http://"))) {
+            url = "https://" + url;
+        }
+        
+        const encodedUrl = __uv$config.encodeUrl(url);
+        document.querySelector("#siteurl").src = "/service/" + encodedUrl;
     }
 });
 
-urlInput.value = Ultraviolet.codec.xor.decode(encodedUrl);
-urlInput.style.color = 'rgba(100, 100, 100, 0.973)';
-
-var devToolsLoaded = false;
-
-function devTools() {
-  var siteIframe = document.getElementById('siteurl');
-  if (siteIframe) {
-    var innerDoc = siteIframe.contentDocument || siteIframe.contentWindow.document;
-    var eruda = innerDoc.getElementById('eruda');
-
-    if (!devToolsLoaded) {
-      if (!eruda) {
-        var erudaScript = document.createElement('script');
-        erudaScript.src = "//cdn.jsdelivr.net/npm/eruda";
-        erudaScript.onload = function() {
-          var initScript = document.createElement('script');
-          initScript.innerHTML = "eruda.init();eruda.show();";
-          innerDoc.head.appendChild(initScript);
-        };
-
-        innerDoc.head.appendChild(erudaScript);
-      }
-    } else {
-      if (eruda) {
-        eruda.remove();
-      }
+// Update URL bar when iframe loads
+siteUrl.addEventListener("load", function() {
+    const currentUrl = this.contentWindow.location.href;
+    const decodedUrl = currentUrl.split("/service/")[1];
+    if (decodedUrl) {
+        searchInput.value = __uv$config.decodeUrl(decodedUrl);
     }
-    devToolsLoaded = !devToolsLoaded;
-  } else {
-    console.error('Failed to load DevTools!');
-  }
+});
+
+function isUrl(val = "") {
+    if (/^http(s?):\/\//.test(val) || (val.includes(".") && val.substr(0, 1) !== " ")) {
+        return true;
+    }
+    return false;
 }
 
-/* url bar functions */
+// Existing button functions
 function openWindow() {
-    function openTabWithIframe(url) {
-        const newTab = window.open('about:blank', '_blank');
-        if (newTab) {
-            const iframe = document.createElement('iframe');
-            iframe.id = 'siteurl';
-            iframe.src = url;
-            iframe.style.position = 'fixed';
-            iframe.style.inset = '0px';
-            iframe.style.outline = 'none';
-            iframe.style.border = 'none';
-            iframe.style.height = '100%';
-            iframe.style.width = '100%';
-            iframe.style.overflow = 'hidden';
-            newTab.document.body.appendChild(iframe);
-        } else {
-            console.error('Failed to open a new tab.');
-        }
-    }
     const abFrame = document.getElementById('siteurl');
     const currentSrc = abFrame.contentWindow.location.href;
-    const targetUrl = currentSrc;
-    openTabWithIframe(targetUrl);
-    location.href = 'https://google.com';
+    window.open(currentSrc, '_blank');
 }
-
-var iframe = siteUrl;
 
 function toggleFs() {
     if (!document.fullscreenElement) {
-        iframe.requestFullscreen().catch(err => {
-            console.error(`Error attempting to enable full-screen mode: ${err.message}`);
-        });
+        siteUrl.requestFullscreen();
     } else {
         document.exitFullscreen();
     }
@@ -91,17 +54,29 @@ function hideBar() {
 }
 
 function reload() {
-    iframe.contentWindow.location.reload();
+    siteUrl.contentWindow.location.reload();
 }
 
 function forward() {
-    iframe.contentWindow.history.go(1);
+    siteUrl.contentWindow.history.go(1);
 }
 
 function back() {
-    iframe.contentWindow.history.go(-1);
+    siteUrl.contentWindow.history.go(-1);
 }
 
 function exit() {
     location.href = '/';
+}
+
+function devTools() {
+    const innerDoc = siteUrl.contentDocument || siteUrl.contentWindow.document;
+    if (!window.eruda) {
+        const script = document.createElement('script');
+        script.src = "//cdn.jsdelivr.net/npm/eruda";
+        script.onload = () => eruda.init();
+        innerDoc.head.appendChild(script);
+    } else {
+        eruda.destroy();
+    }
 }
