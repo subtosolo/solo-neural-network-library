@@ -18,7 +18,7 @@ function send(url) {
 }
 
 function ourDiscord() {
-    window.location.href = 'https://discord.gg/ujCeNsGXud';
+    window.location.href = 'https://discord.gg/zNMw3vKbFE';
 }
 
 
